@@ -1,4 +1,5 @@
 
+
 import requests
 from bs4 import BeautifulSoup
 
@@ -21,3 +22,11 @@ class GetInfo:
         print(self.imgUrls[1]['src'])
         print(self.Grades[1].text)
         print(self.GradeCount[1].text)
+
+    def GetLenght(self):
+        self.arr = [];
+        self.arr.append(len(self.Names))
+        self.arr.append(len(self.imgUrls))
+        self.arr.append(len(self.GradeCount))
+        self.arr.append(len(self.Grades))
+        return min(self.arr)
