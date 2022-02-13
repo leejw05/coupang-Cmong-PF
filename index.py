@@ -1,24 +1,38 @@
+import string
+from tokenize import String
 from GetInfo import GetInfo
 import json
+
+def IdicJpg(url):
+    if url[-1] == "f": 
+        return True 
+    else : False
 
 def CreateJson(Bs4):
     data = []
     for i in range(Bs4.GetLenght()):
+        img = str(Bs4.imgUrls[i]['src'])
+        if IdicJpg(img):
+            img = Bs4.imgUrls[i]['data-img-src']
         data.append(
             {
             'Name' : Bs4.Names[i].text,
-            'imgUrl' : Bs4.imgUrls[i]['src'],
+            'imgUrl' :  img,
             'Grade' :Bs4.Grades[i].text,
             'GradeCount' : Bs4.GradeCount[i].text,
             }
         )
     with open('./datas.json', 'w',encoding='UTF-8-sig') as file:
         file.write(json.dumps(data, ensure_ascii=False,indent=4,))
+
 def CreateHTML(Bs4):
     Items = ""
     for i in range(Bs4.GetLenght()):
+        img = str(Bs4.imgUrls[i]['src'])
+        if IdicJpg(img):
+            img = Bs4.imgUrls[i]['data-img-src']
         Name= Bs4.Names[i].text
-        imgUrl= Bs4.imgUrls[i]['src']
+        imgUrl= img
         Grade=Bs4.Grades[i].text
         GradeCount= Bs4.GradeCount[i].text
 
@@ -57,6 +71,9 @@ def CreateHTML(Bs4):
 Bs4 = GetInfo('https://www.coupang.com/np/search?q=%EC%A0%9C%EB%A1%9C%EC%82%AC%EC%9D%B4%EB%8B%A4&channel=recent&component=&eventCategory=SRP&trcid=&traid=&sorter=scoreDesc&minPrice=&maxPrice=&priceRange=&filterType=&listSize=36&filter=&isPriceRange=false&brand=&offerCondition=&rating=0&page=2&rocketAll=false&searchIndexingToken=1=5&backgroundColor=')
 
 Bs4.FindInfos()
+
+
+# Bs4.ShowInfos()
 
 CreateJson(Bs4)
 CreateHTML(Bs4)
