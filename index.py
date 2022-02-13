@@ -40,6 +40,7 @@ def CreateHTML(Bs4):
         <div style="text-align:center; border-bottom: 2px solid black;">
                 <h3>{Name}/h3>
             <img 
+            style = "display: block; margin: 0px auto;"
               src="{imgUrl}"
               alt=""
             />
